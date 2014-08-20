@@ -6,3 +6,6 @@ App.Route = Ember.Route.extend({
     return ['red', 'yellow', 'blue'];
   }
 });
+App.WelcomeController = Ember.Controller.extend({
+  welcome: 'My First Example'
+});
