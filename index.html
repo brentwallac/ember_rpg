@@ -62,6 +62,8 @@
 		{{input type="text" name='name' value=name}}
 		{{input type="text" name='age' value=age}}
 		<button {{ action "makecharacter"}}> Create</button>
+		<hr>
+		{{partial "roll"}}
 	</div>
 {{outlet}}
 
@@ -79,14 +81,20 @@
 	{{/each}}
 </script>
 
-<script type='text/x-handlebars' data-template-name='character'>
-	<h1>{{name}}</h1>
-	{{name}}
-	{{age}}
+<script type='text/x-handlebars' data-template-name='_roll'>
+	<h2>Roll</h2>
+		<p>Str:{{strength}}</p>
+		<p>Dex{{dex}}</p>
+		<p>Hp{{hp}}</p>
+
+		<button {{ action "rollStats"}}> Create</button>
+		<button {{action "saveStats"}}>Save</button>
 	
 </script>
 
+<script type='text/x-handlebars' data-template-name='character'>
 
+</script>
 </body>
 <footer>
 </footer>

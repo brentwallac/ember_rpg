@@ -30,18 +30,40 @@ App.CharacterRoute = Ember.Route.extend({
 
 
 App.CharactersController = Ember.ArrayController.extend({
+
 	actions: {
 		makecharacter: function() {
 			var record = this.store.createRecord('characters', {
 			  name: this.get('name'),
 			  age: this.get('age')
+
 			 
 			});
 		record.save().then(function() {
 			console.log('record saved')
 		});
-		}
-	}	
+		},
+		rollStats: function() {
+			strength = Math.floor((Math.random() * 10) + 1);
+			dex = Math.floor((Math.random() * 10) + 1);
+			hp = Math.floor((Math.random() * 10) + 1) * strength;
+			this.set('strength',strength);
+			this.set('dex',dex);
+			this.set('hp',hp);
+		},
+		saveStats: function() {
+			var character = this.get('model');
+			var strength = this.get('strength');
+			var dex = this.get('dex');
+			var hp = this.get('hp');
+			character.set("str", strength);
+			character.set('dex',dex);
+			character.set('hp',hp);
+			character.save();
+			console.log(this.model);
+		},
+
+	}
 });
 	
 
@@ -58,10 +80,13 @@ App.CharacterRoute = Ember.Route.extend({
 });
 
 
-App.Store = DS.Store.extend();
+App.store = DS.Store.extend();
 App.Characters = DS.Model.extend({
 	name: DS.attr('string'),
-	age: DS.attr('number')
+	age: DS.attr('number'),
+	str: DS.attr('number'),
+  	dex: DS.attr('number'),
+  	hp: DS.attr('number')
 });
 
 App.Characters.FIXTURES = [
@@ -69,6 +94,11 @@ App.Characters.FIXTURES = [
 { 
 	id:1,
 	name:'frst users',
-  	age: 15
+  	age: 15,
+  	agi: 3,
+  	str: 9,
+  	dex: 9,
+  	hp: 89
+
 }
 ];
