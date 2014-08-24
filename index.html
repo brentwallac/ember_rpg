@@ -42,8 +42,6 @@
 <script src="js/libs/ember-data.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="js/application.js"></script>
-<script src="js/router.js"></script>
-<script src="js/controller.js"></script>
 
 	<!-- Latest compiled and minified JavaScript -->
   
@@ -54,13 +52,39 @@
 <p>{{message}}</p>
 
 </script>
-<script type='text/x-handlebars' data-template-name='character'>
-<h2>Character maker</h2>
-<p>Create a character</p>
-<hr>
-{{input type="text" name='name' action="creatName"}}
+
+<script type='text/x-handlebars' data-template-name='characters'>
+	<div class='col-md-4'>{{partial "created"}}</div>
+	<div class='col-md-8'>
+		<h2>Character maker</h2>
+		<p>Create a character</p>
+		<hr>
+		{{input type="text" name='name' value=name}}
+		{{input type="text" name='age' value=age}}
+		<button {{ action "makecharacter"}}> Create</button>
+	</div>
+{{outlet}}
+
+</script>
+<script type='text/x-handlebars' data-template-name='_created'>
+	<h1>Current characters</h2>
+	{{#each}}
+	<ul>
+	{{#link-to 'character' this classNames='row'}}{{name}}{{/link-to}}
+	</ul>
+	{{else}}
+
+	<p>No characters found</p>
+
+	{{/each}}
 </script>
 
+<script type='text/x-handlebars' data-template-name='character'>
+	<h1>{{name}}</h1>
+	{{name}}
+	{{age}}
+	
+</script>
 
 
 </body>
