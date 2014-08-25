@@ -40,6 +40,7 @@
 <script src="js/libs/handlebars-1.1.2.js"></script>
 <script src="js/libs/ember-1.7.0.js"></script>
 <script src="js/libs/ember-data.js"></script>
+<script src="css/style.css"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="js/application.js"></script>
 
@@ -54,6 +55,7 @@
 </script>
 
 <script type='text/x-handlebars' data-template-name='characters'>
+
 	<div class='col-md-4'>{{partial "created"}}</div>
 	<div class='col-md-8'>
 		<h2>Character maker</h2>
@@ -61,7 +63,6 @@
 		<hr>
 		{{input type="text" name='name' value=name}}
 		{{input type="text" name='age' value=age}}
-		<button {{ action "makecharacter"}}> Create</button>
 		<hr>
 		{{partial "roll"}}
 	</div>
@@ -83,17 +84,23 @@
 
 <script type='text/x-handlebars' data-template-name='_roll'>
 	<h2>Roll</h2>
-		<p>Str:{{strength}}</p>
-		<p>Dex{{dex}}</p>
-		<p>Hp{{hp}}</p>
-
-		<button {{ action "rollStats"}}> Create</button>
+		<p>Str: {{strength}}</p>
+		<p>Dex: {{dex}}</p>
+		<p>Hp: {{hp}}</p>
+		<onLoad {{action "rollStats"}}>
+		<button {{ action "rollStats"}}>Roll</button>
 		<button {{action "saveStats"}}>Save</button>
 	
 </script>
 
 <script type='text/x-handlebars' data-template-name='character'>
-
+{{#each}}
+<h3>{{name}}</h3>
+<p>{{age}}</p>
+<p>{{str}}</p>
+<p>{{dex}}</p>
+<p>{{hp}}</p>
+{{/each}}
 </script>
 </body>
 <footer>

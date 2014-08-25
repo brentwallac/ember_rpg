@@ -21,6 +21,7 @@ App.WelcomeController = Ember.Controller.extend({
 });
 
 App.CharacterRoute = Ember.Route.extend({
+	
 	model: function () { 
 		return App.Characters.findBy('name',params.name);
 	}
@@ -28,21 +29,9 @@ App.CharacterRoute = Ember.Route.extend({
 });
 
 
-
 App.CharactersController = Ember.ArrayController.extend({
 
 	actions: {
-		makecharacter: function() {
-			var record = this.store.createRecord('characters', {
-			  name: this.get('name'),
-			  age: this.get('age')
-
-			 
-			});
-		record.save().then(function() {
-			console.log('record saved')
-		});
-		},
 		rollStats: function() {
 			strength = Math.floor((Math.random() * 10) + 1);
 			dex = Math.floor((Math.random() * 10) + 1);
@@ -52,32 +41,40 @@ App.CharactersController = Ember.ArrayController.extend({
 			this.set('hp',hp);
 		},
 		saveStats: function() {
-			var character = this.get('model');
-			var strength = this.get('strength');
-			var dex = this.get('dex');
-			var hp = this.get('hp');
-			character.set("str", strength);
-			character.set('dex',dex);
-			character.set('hp',hp);
-			character.save();
-			console.log(this.model);
-		},
 
+			var record = this.store.createRecord('characters', {
+				name:this.get('name'),
+				strength: this.get('strength'),
+				dex: this.get('dex'),
+				hp: this.get('hp'),
+				age: this.get('age')
+			});
+			record.save();
+			console.log('Saved');
+		},
 	}
+	
+
 });
 	
 
+
 App.CharactersRoute = Ember.Route.extend({
+	setupController: function(controller, model) {
+		this._super(controller,model);
+		strength =Math.floor((Math.random() * 10) + 1);
+		dex = Math.floor((Math.random() * 10) + 1);
+		hp = Math.floor((Math.random() * 10) + 1) * strength;
+		controller.set('strength',strength);
+		controller.set('hp',hp);
+		controller.set('dex',dex);
+
+    },
 	model: function() {
 		return this.store.findAll('characters');
 	}
 });
 
-App.CharacterRoute = Ember.Route.extend({
-	model: function() {
-		return this.store.findBy('characters',param.name);
-	}
-});
 
 
 App.store = DS.Store.extend();
