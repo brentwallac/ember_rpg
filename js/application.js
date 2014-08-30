@@ -11,9 +11,9 @@ App.WelcomeController = Ember.Controller.extend({
 
 App.Router.map(function() {
  this.resource('welcome',{path: '/'});
- this.resource('characters', function() { 
- 	this.resource('character', { path: '/:name' });
- });
+ this.resource('characters');
+ this.route('character', { path: ':name' });
+
 });
 
 App.WelcomeController = Ember.Controller.extend({
@@ -22,8 +22,8 @@ App.WelcomeController = Ember.Controller.extend({
 
 App.CharacterRoute = Ember.Route.extend({
 	
-	model: function () { 
-		return App.Characters.findBy('name',params.name);
+	model: function (params) { 
+		return this.store.find('characters', params.character_name);
 	}
 
 });
@@ -61,8 +61,8 @@ App.CharactersController = Ember.ArrayController.extend({
 
 App.CharactersRoute = Ember.Route.extend({
 	setupController: function(controller, model) {
-		this._super(controller,model);
-		strength =Math.floor((Math.random() * 10) + 1);
+		this._super(controller,model); // Remember this keeps the default behaviour.
+		strength = Math.floor((Math.random() * 10) + 1);
 		dex = Math.floor((Math.random() * 10) + 1);
 		hp = Math.floor((Math.random() * 10) + 1) * strength;
 		controller.set('strength',strength);
@@ -80,7 +80,7 @@ App.CharactersRoute = Ember.Route.extend({
 App.store = DS.Store.extend();
 App.Characters = DS.Model.extend({
 	name: DS.attr('string'),
-	age: DS.attr('number'),
+	age: DS.attr('string'),
 	str: DS.attr('number'),
   	dex: DS.attr('number'),
   	hp: DS.attr('number')
@@ -91,7 +91,7 @@ App.Characters.FIXTURES = [
 { 
 	id:1,
 	name:'frst users',
-  	age: 15,
+  	age: '15',
   	agi: 3,
   	str: 9,
   	dex: 9,

@@ -80,6 +80,7 @@
 	<p>No characters found</p>
 
 	{{/each}}
+
 </script>
 
 <script type='text/x-handlebars' data-template-name='_roll'>
@@ -87,20 +88,22 @@
 		<p>Str: {{strength}}</p>
 		<p>Dex: {{dex}}</p>
 		<p>Hp: {{hp}}</p>
-		<onLoad {{action "rollStats"}}>
-		<button {{ action "rollStats"}}>Roll</button>
+		
+		<button {{action "rollStats"}}>Roll</button>
 		<button {{action "saveStats"}}>Save</button>
 	
 </script>
 
 <script type='text/x-handlebars' data-template-name='character'>
-{{#each}}
-<h3>{{name}}</h3>
-<p>{{age}}</p>
-<p>{{str}}</p>
-<p>{{dex}}</p>
-<p>{{hp}}</p>
-{{/each}}
+	
+	<p>Hooray</p>
+
+		<h3>{{name}}</h3>
+		<p>{{age}}</p>
+		<p>{{str}}</p>
+		<p>{{dex}}</p>
+		<p>{{hp}}</p>
+	{{outlet}}
 </script>
 </body>
 <footer>
