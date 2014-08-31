@@ -4,28 +4,15 @@ window.App = Ember.Application.create({
 
 App.ApplicationAdapter = DS.FixtureAdapter.extend();
 
-
-App.WelcomeController = Ember.Controller.extend({
-	message: 'Welcome to RPG Ember'
-});
-
 App.Router.map(function() {
  this.resource('welcome',{path: '/'});
  this.resource('characters');
- this.route('character', { path: ':name' });
-
+ this.route('king', { path: ':name' });
+ this.route('resources');
 });
 
 App.WelcomeController = Ember.Controller.extend({
-	message: 'Hi there, welcome to ember RPG'
-});
-
-App.CharacterRoute = Ember.Route.extend({
-	
-	model: function (params) { 
-		return this.store.find('characters', params.character_name);
-	}
-
+	message: 'Welcome to the Kingdom'
 });
 
 
@@ -59,43 +46,55 @@ App.CharactersController = Ember.ArrayController.extend({
 	
 
 
-App.CharactersRoute = Ember.Route.extend({
+App.ResourcesRoute = Ember.Route.extend({
 	setupController: function(controller, model) {
 		this._super(controller,model); // Remember this keeps the default behaviour.
-		strength = Math.floor((Math.random() * 10) + 1);
-		dex = Math.floor((Math.random() * 10) + 1);
-		hp = Math.floor((Math.random() * 10) + 1) * strength;
+		stone = Math.floor((Math.random() * 10) + 1);
+		wood = Math.floor((Math.random() * 10) + 1);
+		gold = 500;
 		controller.set('strength',strength);
 		controller.set('hp',hp);
 		controller.set('dex',dex);
 
     },
 	model: function() {
-		return this.store.findAll('characters');
+		return this.store.findAll('king');
 	}
 });
 
 
 
-App.store = DS.Store.extend();
-App.Characters = DS.Model.extend({
+App.store = DS.Store.extend({
+
+
+});
+App.King = DS.Model.extend({
 	name: DS.attr('string'),
-	age: DS.attr('string'),
-	str: DS.attr('number'),
-  	dex: DS.attr('number'),
-  	hp: DS.attr('number')
+	email: DS.attr('string')
+	resources: belongsTo('Resources')
+
 });
 
-App.Characters.FIXTURES = [
+App.Resources = DS.Model.extend({
+	stone: DS.attr('number'),
+	wood: DS.attr('number'),
+	gold: DS.attr('number'),
+	id:belongsTo('King')
 
-{ 
-	id:1,
-	name:'frst users',
-  	age: '15',
-  	agi: 3,
-  	str: 9,
-  	dex: 9,
-  	hp: 89
+});
 
-}
-];
+
+App.People = DS.Model.extend({
+	soliders: DS.attr('number'),
+	crafters: DS.attr('number'),
+	id:belongsTo('King')
+
+});
+
+App.Buildings = DS.Model.extend({
+	soliders: DS.attr('number'),
+	crafters: DS.attr('number'),
+	id:belongsTo('King')
+
+});
+

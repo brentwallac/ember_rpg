@@ -51,7 +51,7 @@
 <body>
  <script type="text/x-handlebars" data-template-name='welcome'>
 <p>{{message}}</p>
-
+<p>{{#link-to start}}Begin{{/link-to}}
 </script>
 
 <script type='text/x-handlebars' data-template-name='characters'>
@@ -95,7 +95,8 @@
 </script>
 
 <script type='text/x-handlebars' data-template-name='character'>
-	
+	<div class='col-md-3'></div>
+	<div class='col-md-6'>
 	<p>Hooray</p>
 
 		<h3>{{name}}</h3>
@@ -103,8 +104,13 @@
 		<p>{{str}}</p>
 		<p>{{dex}}</p>
 		<p>{{hp}}</p>
+	</div>
 	{{outlet}}
 </script>
+<script type='text/x-handlebars' data-template-name='character'>
+
+</script>
+
 </body>
 <footer>
 </footer>
