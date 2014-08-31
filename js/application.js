@@ -6,7 +6,7 @@ App.ApplicationAdapter = DS.FixtureAdapter.extend();
 
 App.Router.map(function() {
  this.resource('welcome',{path: '/'});
- this.resource('characters');
+ this.resource('kingdoms');
  this.route('king', { path: ':name' });
  this.route('resources');
 });
@@ -16,25 +16,25 @@ App.WelcomeController = Ember.Controller.extend({
 });
 
 
-App.CharactersController = Ember.ArrayController.extend({
+App.KingdomsController = Ember.ArrayController.extend({
 
 	actions: {
 		rollStats: function() {
-			strength = Math.floor((Math.random() * 10) + 1);
-			dex = Math.floor((Math.random() * 10) + 1);
-			hp = Math.floor((Math.random() * 10) + 1) * strength;
-			this.set('strength',strength);
-			this.set('dex',dex);
-			this.set('hp',hp);
+			stone = Math.floor((Math.random() * 10) + 1);
+			wood = Math.floor((Math.random() * 10) + 1);
+			gold = 1000;
+			this.set('stone',stone);
+			this.set('wood',wood);
+			this.set('gold',gold);
 		},
 		saveStats: function() {
 
-			var record = this.store.createRecord('characters', {
-				name:this.get('name'),
-				strength: this.get('strength'),
-				dex: this.get('dex'),
-				hp: this.get('hp'),
-				age: this.get('age')
+			var record = this.store.createRecord('resources', {
+				
+				stone: this.get('stone'),
+				wood: this.get('wood'),
+				gold: this.get('gold')
+			
 			});
 			record.save();
 			console.log('Saved');
@@ -52,13 +52,13 @@ App.ResourcesRoute = Ember.Route.extend({
 		stone = Math.floor((Math.random() * 10) + 1);
 		wood = Math.floor((Math.random() * 10) + 1);
 		gold = 500;
-		controller.set('strength',strength);
-		controller.set('hp',hp);
-		controller.set('dex',dex);
+		controller.set('stone',stone);
+		controller.set('wood',wood);
+		controller.set('gold',gold);
 
     },
 	model: function() {
-		return this.store.findAll('king');
+		return this.store.findAll('resources');
 	}
 });
 
@@ -71,7 +71,7 @@ App.store = DS.Store.extend({
 App.King = DS.Model.extend({
 	name: DS.attr('string'),
 	email: DS.attr('string')
-	resources: belongsTo('Resources')
+	resources: belongsTo('resources')
 
 });
 
@@ -79,7 +79,7 @@ App.Resources = DS.Model.extend({
 	stone: DS.attr('number'),
 	wood: DS.attr('number'),
 	gold: DS.attr('number'),
-	id:belongsTo('King')
+	id:belongsTo('king')
 
 });
 
@@ -87,14 +87,14 @@ App.Resources = DS.Model.extend({
 App.People = DS.Model.extend({
 	soliders: DS.attr('number'),
 	crafters: DS.attr('number'),
-	id:belongsTo('King')
+	id:belongsTo('king')
 
 });
 
 App.Buildings = DS.Model.extend({
 	soliders: DS.attr('number'),
 	crafters: DS.attr('number'),
-	id:belongsTo('King')
+	id:belongsTo('king')
 
 });
 
