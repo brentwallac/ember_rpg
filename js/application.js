@@ -6,7 +6,7 @@ App.ApplicationAdapter = DS.FixtureAdapter.extend();
 
 App.Router.map(function() {
  this.resource('welcome',{path: '/'});
- this.resource('kingdoms');
+ this.resource('start');
  this.route('king', { path: ':name' });
  this.route('resources');
 });
@@ -16,9 +16,11 @@ App.WelcomeController = Ember.Controller.extend({
 });
 
 
-App.KingdomsController = Ember.ArrayController.extend({
+App.StartController = Ember.ArrayController.extend({
 
 	actions: {
+
+		
 		rollStats: function() {
 			stone = Math.floor((Math.random() * 10) + 1);
 			wood = Math.floor((Math.random() * 10) + 1);
@@ -27,74 +29,73 @@ App.KingdomsController = Ember.ArrayController.extend({
 			this.set('wood',wood);
 			this.set('gold',gold);
 		},
-		saveStats: function() {
+		saveStats: function() {	
 
-			var record = this.store.createRecord('resources', {
-				
-				stone: this.get('stone'),
-				wood: this.get('wood'),
-				gold: this.get('gold')
+			var record = this.store.createRecord('king', {
+				name: this.get('name'),
+				email: this.get('email')
 			
 			});
-			record.save();
-			console.log('Saved');
+			record.save().then(function() {
+				
+
+			});
+
+			
 		},
 	}
 	
 
 });
 	
+App.KingRoute = Ember.Route.extend({
+
+model: function(param) {
+	return this.store.find('king',param.id);
+}
+});
 
 
-App.ResourcesRoute = Ember.Route.extend({
+
+App.king = DS.Model.extend({
+	name: DS.attr('string'),
+	email: DS.attr('string'),
+	resources: DS.belongsTo('resources', {async:true})
+
+});
+
+App.resources = DS.Model.extend({
+	stone: DS.attr('number'),
+	wood: DS.attr('number'),
+	gold: DS.attr('number'),
+	king: DS.belongsTo('king', {async:true})
+
+});
+
+
+App.people = DS.Model.extend({
+	soliders: DS.attr('number'),
+	crafters: DS.attr('number'),
+	king: DS.belongsTo('king', {async:true})
+
+});
+
+App.buildings = DS.Model.extend({
+	soliders: DS.attr('number'),
+	crafters: DS.attr('number'),
+	king:DS.belongsTo('king')
+
+});
+
+App.StartRoute = Ember.Route.extend({
 	setupController: function(controller, model) {
 		this._super(controller,model); // Remember this keeps the default behaviour.
 		stone = Math.floor((Math.random() * 10) + 1);
 		wood = Math.floor((Math.random() * 10) + 1);
-		gold = 500;
+		gold = 1000;
 		controller.set('stone',stone);
 		controller.set('wood',wood);
 		controller.set('gold',gold);
 
-    },
-	model: function() {
-		return this.store.findAll('resources');
-	}
+    }
 });
-
-
-
-App.store = DS.Store.extend({
-
-
-});
-App.King = DS.Model.extend({
-	name: DS.attr('string'),
-	email: DS.attr('string')
-	resources: belongsTo('resources')
-
-});
-
-App.Resources = DS.Model.extend({
-	stone: DS.attr('number'),
-	wood: DS.attr('number'),
-	gold: DS.attr('number'),
-	id:belongsTo('king')
-
-});
-
-
-App.People = DS.Model.extend({
-	soliders: DS.attr('number'),
-	crafters: DS.attr('number'),
-	id:belongsTo('king')
-
-});
-
-App.Buildings = DS.Model.extend({
-	soliders: DS.attr('number'),
-	crafters: DS.attr('number'),
-	id:belongsTo('king')
-
-});
-

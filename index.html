@@ -51,10 +51,10 @@
 <body>
  <script type="text/x-handlebars" data-template-name='welcome'>
 <p>{{message}}</p>
-<p>{{#link-to start}}Begin{{/link-to}}
+<p>{{#link-to 'start'}}Begin{{/link-to}}
 </script>
 
-<script type='text/x-handlebars' data-template-name='characters'>
+<script type='text/x-handlebars' data-template-name='start'>
 
 	<div class='col-md-4'>{{partial "created"}}</div>
 	<div class='col-md-8'>
@@ -62,7 +62,7 @@
 		<p>Create a character</p>
 		<hr>
 		{{input type="text" name='name' value=name}}
-		{{input type="text" name='age' value=age}}
+		{{input type="email" name='email' value=email}}
 		<hr>
 		{{partial "roll"}}
 	</div>
@@ -94,7 +94,7 @@
 	
 </script>
 
-<script type='text/x-handlebars' data-template-name='kingdoms'>
+<script type='text/x-handlebars' data-template-name='king'>
 	<div class='col-md-3'></div>
 	<div class='col-md-6'>
 	<p>Hooray</p>
