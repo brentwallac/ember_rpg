@@ -1,5 +1,8 @@
 window.App = Ember.Application.create({
-	LOG_TRANSITIONS: true
+	LOG_TRANSITIONS: true,
+	 LOG_ACTIVE_GENERATION: true,
+    LOG_TRANSITIONS_INTERNAL: false,
+    LOG_VIEW_LOOKUPS: true
 });
 
 App.ApplicationAdapter = DS.FixtureAdapter.extend();
@@ -8,8 +11,8 @@ App.Store = DS.Store.extend();
 App.Router.map(function() {
  this.resource('welcome',{path: '/'});
  this.resource('start');
- this.route('king', { path: ':name' });
-  this.route('kings', { path: ':name' });
+ this.resource('kings', { path: '/:name' });
+  this.resource('king', { path: '/king/:king_id' });
  this.route('resources');
 });
 
@@ -60,6 +63,10 @@ App.WelcomeController = Ember.Controller.extend({
 	message: 'Welcome to the Kingdom'
 });
 
+App.KingController = Ember.ObjectController.extend({
+
+	
+});
 
 
 App.King = DS.Model.extend({
@@ -73,7 +80,7 @@ App.King.FIXTURES = [{
 	id: 1,
 	name: 'kingexample',
 	email: 'king@kingdon.com',
-	resources_id: 1
+	resources: 1
 
 }];
 
@@ -82,9 +89,19 @@ App.Resources = DS.Model.extend({
 	stone: DS.attr('number'),
 	wood: DS.attr('number'),
 	gold: DS.attr('number'),
-	king_id: 1
+	king: DS.belongsTo('king',{async:true})
 
 });
+
+
+App.Resources.FIXTURES = [{
+	id: 1,
+	stone: 10,
+	wood: 5,
+	gold:100
+
+}];
+
 
 
 App.People = DS.Model.extend({
@@ -116,24 +133,17 @@ App.StartRoute = Ember.Route.extend({
 	return this.store.findAll('king');
 	},
 });
-App.KingRoute = Ember.Route.extend({
-	model: function(params) {
-	return king.findBy('id',params.king_id);
-}
-});
+
+
 
 App.KingsRoute = Ember.Route.extend({
 	model: function() {
 	return this.store.findAll('king');
-}
+	}
+});
+App.KingRoute = Ember.Route.extend({
+	model: function(params) {
+	return this.store.findBy('king',params.id);
+	}
 });
 
-
-App.Resources.FIXTURES = [{
-	id: 1,
-	stone: 10,
-	wood: 5,
-	gold:100
-
-
-}];

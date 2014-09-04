@@ -73,7 +73,7 @@
 	<h1>Current characters</h2>
 	{{#each}}
 	<ul>
-	{{#link-to 'kings' this classNames='row'}}{{name}}{{/link-to}}
+	{{#link-to 'king' this classNames='row'}}{{name}}{{/link-to}}
 	</ul>
 	{{else}}
 
@@ -100,11 +100,12 @@
 	<p>Hooray</p>
 
 		<h3>{{name}}</h3>
-		<p>{{wood}}</p>
-		<p>{{stone}}</p>
-		<p>{{gold}}</p>
+		<p>{{resources.wood}}</p>
+		<p>{{resources.stone}}</p>
+		<p>{{resources.gold}}</p>
 	</div>
-	{{outlet}}
+{{outlet}}
+	
 </script>
 
 
