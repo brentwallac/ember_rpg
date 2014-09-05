@@ -12,7 +12,7 @@ App.Router.map(function() {
  this.resource('welcome',{path: '/'});
  this.resource('start');
  this.resource('kings', { path: '/:name' });
-  this.resource('king', { path: '/king/:king_id' });
+  this.resource('king', { path: '/	king/:king_id' });
  this.route('resources');
 });
 
